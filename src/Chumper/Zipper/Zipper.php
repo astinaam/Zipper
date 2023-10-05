@@ -591,15 +591,15 @@ class Zipper
     private function extractFilesInternal($path, callable $matchingMethod)
     {
         $self = $this;
-        $this->repository->each(function ($fileName) use ($path, $matchingMethod, $self) {
+        $this->repository->each(function ($file) use ($path, $matchingMethod, $self) {
             $currentPath = $self->getCurrentFolderWithTrailingSlash();
-            if (!empty($currentPath) && !starts_with($fileName, $currentPath)) {
+            if (!empty($currentPath) && !starts_with($file, $currentPath)) {
                 return;
             }
 
-            $filename = str_replace($self->getInternalPath(), '', $fileName);
+            $filename = str_replace($self->getInternalPath(), '', $file);
             if ($matchingMethod($filename)) {
-                $self->extractOneFileInternal($fileName, $path);
+                $self->extractOneFileInternal($file, $path);
             }
         });
     }
